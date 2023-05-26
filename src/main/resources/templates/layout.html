@@ -26,16 +26,24 @@
                             <a class="nav-link" th:href="@{/article}">Ajouter un article</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">PAge 2</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">PAge 3</a>
+                            <a class="nav-link" href="#">Voir le panier</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
         <!--End Nav -->
+        <!--Start category -->
+        <div class="container">
+            <nav class="navbar">
+                <ul class="navbar-nav flex-row w-100 justify-content-around px-2">
+                    <li class="nav-item" th:each="category : ${listCategory}">
+                        <a class="nav-link active" aria-current="page" th:text=${category.name}></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <!-- end category -->
     </header>
 
     <main>
