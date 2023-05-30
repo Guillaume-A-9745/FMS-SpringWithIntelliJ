@@ -26,11 +26,19 @@ public class ArticleController {
 
     @GetMapping("/index")
     public String index(Model model, @RequestParam(name="page", defaultValue = "0") int page,
-                                     @RequestParam(name = "keyword", defaultValue = "") String kw) {
-        Page<Article> articles = articleRepository.findByDescriptionContains(kw, PageRequest.of(page, 5));
+                                     @RequestParam(name = "keyword", defaultValue = "") String kw,
+                                     @RequestParam(name = "categoryId", required = false) Long categoryId) {
+        Page<Article> articles;
+        if (categoryId != null) {
+            articles = articleRepository.findByCategoryIdAndDescriptionContains(categoryId, kw, PageRequest.of(page, 5));
+        } else {
+            articles = articleRepository.findByDescriptionContains(kw, PageRequest.of(page, 5));
+        }
+
         model.addAttribute("listArticle", articles.getContent());
         model.addAttribute("pages", new int[articles.getTotalPages()]);
         model.addAttribute("currentPage", page);
+        model.addAttribute("categoryId", categoryId);
 
         List<Category> categories = categoryRepository.findAll();
         model.addAttribute("listCategory", categories);
@@ -55,5 +63,10 @@ public class ArticleController {
         if(bindingResult.hasErrors()) return "article";
         articleRepository.save(article);
         return "redirect:/index";
+    }
+
+    @GetMapping("/article_update")
+    public String articleUpdate(Model model) {
+        return "article_update";
     }
 }

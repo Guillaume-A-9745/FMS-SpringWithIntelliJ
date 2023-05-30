@@ -10,7 +10,7 @@
 <div layout:fragment="content">
     <div class="container">
         <div class="card mb-3">
-            <div class="card-header text-white bg-primary"><h5 class="card-title text-center">Liste des articles</h5></div>
+            <div class="card-header text-white bg-primary"><h5 class="card-title text-center text-uppercase">Liste des articles</h5></div>
             <div class="card-body text-end">
                 <form th:action="@{/index}" method="get">
                     <label>Keyword</label>
@@ -26,6 +26,8 @@
                         <th scope="col">Description</th>
                         <th scope="col">Prix</th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -33,7 +35,9 @@
                         <td th:text=${a.id}></td>
                         <td th:text=${a.description}></td>
                         <td th:text=${a.price}></td>
+                        <td> <a class="btn btn-outline-primary">Add/cart</a> </td>
                         <td> <a class="btn btn-danger" th:href="@{/delete(id=${a.id}, page=${currentPage}, keyword=${keyword})}">Delete</a> </td>
+                        <td> <a class="btn btn-info" th:href="@{/article_update}">Update</a> </td>
                     </tr>
                     </tbody>
                 </table>
@@ -41,7 +45,7 @@
             <div class="card-footer">
                 <ul class="pagination">
                     <li class="page-item" th:class="${currentPage==status.index}?'active':''" th:each="page,status:${pages}">
-                        <a class="page-link" th:href="@{/index(page=${status.index},keyword=${keyword})}" th:text="${status.index}"></a>
+                        <a class="page-link" th:href="@{/index(page=${status.index},keyword=${keyword},categoryId=${categoryId})}" th:text="${status.index}"></a>
                     </li>
                 </ul>
             </div>

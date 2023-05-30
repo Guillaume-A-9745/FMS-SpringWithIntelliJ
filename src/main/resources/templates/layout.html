@@ -38,7 +38,9 @@
             <nav class="navbar">
                 <ul class="navbar-nav flex-row w-100 justify-content-around px-2">
                     <li class="nav-item" th:each="category : ${listCategory}">
-                        <a class="nav-link active" aria-current="page" th:text=${category.name}></a>
+                        <a class="nav-link active" aria-current="page"
+                           th:href="@{/index(page=0, keyword=${kw},categoryId=${category.id})}"
+                           th:text=${category.name}></a>
                     </li>
                 </ul>
             </nav>
