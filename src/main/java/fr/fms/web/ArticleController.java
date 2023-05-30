@@ -11,11 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ArticleController {
@@ -66,7 +68,17 @@ public class ArticleController {
     }
 
     @GetMapping("/article_update")
-    public String articleUpdate(Model model) {
+    public String articleUpdate(@RequestParam("id") Long articleId, Model model) {
+        Optional<Article> article = articleRepository.findById(articleId);
+        model.addAttribute("article", article.orElse(new Article()));
         return "article_update";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute("article") @Valid Article article, BindingResult bindingResult, @RequestParam("id") Long articleId) {
+        if(bindingResult.hasErrors()) return "article_update";
+        article.setId(articleId);
+        articleRepository.save(article);
+        return "redirect:/index";
     }
 }

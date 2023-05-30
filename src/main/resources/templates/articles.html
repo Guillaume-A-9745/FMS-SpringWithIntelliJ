@@ -35,9 +35,9 @@
                         <td th:text=${a.id}></td>
                         <td th:text=${a.description}></td>
                         <td th:text=${a.price}></td>
-                        <td> <a class="btn btn-outline-primary">Add/cart</a> </td>
-                        <td> <a class="btn btn-danger" th:href="@{/delete(id=${a.id}, page=${currentPage}, keyword=${keyword})}">Delete</a> </td>
-                        <td> <a class="btn btn-info" th:href="@{/article_update}">Update</a> </td>
+                        <td class="col-1"> <a class="btn btn-outline-primary">Add/cart</a> </td>
+                        <td class="col-1"> <a class="btn btn-danger" th:href="@{/delete(id=${a.id}, page=${currentPage}, keyword=${keyword})}">Delete</a> </td>
+                        <td class="col-1"> <a class="btn btn-info" th:href="@{/article_update(id=${a.id}, page=${currentPage}, keyword=${keyword})}">Update</a> </td>
                     </tr>
                     </tbody>
                 </table>
