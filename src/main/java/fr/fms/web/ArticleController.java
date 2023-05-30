@@ -57,6 +57,10 @@ public class ArticleController {
     @GetMapping("/article")
     public String article(Model model) {
         model.addAttribute("article", new Article());
+
+        List<Category> categories = categoryRepository.findAll();
+        model.addAttribute("listCategory", categories);
+
         return "article";
     }
 
@@ -71,13 +75,21 @@ public class ArticleController {
     public String articleUpdate(@RequestParam("id") Long articleId, Model model) {
         Optional<Article> article = articleRepository.findById(articleId);
         model.addAttribute("article", article.orElse(new Article()));
+
+        List<Category> categories = categoryRepository.findAll();
+        model.addAttribute("listCategory", categories);
+
         return "article_update";
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute("article") @Valid Article article, BindingResult bindingResult, @RequestParam("id") Long articleId) {
+    public String update(@ModelAttribute("article") @Valid Article article, BindingResult bindingResult, @RequestParam("id") Long articleId, @RequestParam("category") Long categoryId) {
         if(bindingResult.hasErrors()) return "article_update";
         article.setId(articleId);
+
+        Optional<Category> category = categoryRepository.findById(categoryId);
+        category.ifPresent(article::setCategory);
+
         articleRepository.save(article);
         return "redirect:/index";
     }

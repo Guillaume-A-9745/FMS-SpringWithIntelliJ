@@ -28,7 +28,7 @@ public class ShopApplication implements CommandLineRunner {
 
 	//Alimenter la base de donnée
 	private void generateData() {
-		Category samrtphone = categoryRepository.save(new Category(null,"Smartphone",null));
+		Category smartphone = categoryRepository.save(new Category(null,"Smartphone",null));
 		Category pc = categoryRepository.save(new Category(null,"Ordinateur",null));
 		Category tablet = categoryRepository.save(new Category(null,"Tablette",null));
 		Category printer = categoryRepository.save(new Category(null,"Imprimante",null));
@@ -40,13 +40,13 @@ public class ShopApplication implements CommandLineRunner {
 
 
 
-		articleRepository.save(new Article(null,"Samsung S8",250, samrtphone));
-		articleRepository.save(new Article(null,"Samsung S9", 300, samrtphone));
-		articleRepository.save(new Article(null,"Iphone 10",500, samrtphone));
-		articleRepository.save(new Article(null,"Xiaomi MI11",100, samrtphone));
-		articleRepository.save(new Article(null,"OnePlus 9 Pro",200, samrtphone));
-		articleRepository.save(new Article(null,"Google Pixel 5",350, samrtphone));
-		articleRepository.save(new Article(null,"Poco F3",150, samrtphone));
+		articleRepository.save(new Article(null,"Samsung S8",250, smartphone));
+		articleRepository.save(new Article(null,"Samsung S9", 300, smartphone));
+		articleRepository.save(new Article(null,"Iphone 10",500, smartphone));
+		articleRepository.save(new Article(null,"Xiaomi MI11",100, smartphone));
+		articleRepository.save(new Article(null,"OnePlus 9 Pro",200, smartphone));
+		articleRepository.save(new Article(null,"Google Pixel 5",350, smartphone));
+		articleRepository.save(new Article(null,"Poco F3",150, smartphone));
 
 		articleRepository.save(new Article(null,"Dell 810",550, pc));
 		articleRepository.save(new Article(null,"Asus F756",600, pc));
