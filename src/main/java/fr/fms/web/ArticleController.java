@@ -65,8 +65,12 @@ public class ArticleController {
     }
 
     @PostMapping("/save")
-    public String save(@Valid Article article, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) return "article";
+    public String save(@Valid Article article, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            List<Category> categories = categoryRepository.findAll();
+            model.addAttribute("listCategory", categories);
+            return "article";
+        }
         articleRepository.save(article);
         return "redirect:/index";
     }
@@ -83,8 +87,12 @@ public class ArticleController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute("article") @Valid Article article, BindingResult bindingResult, @RequestParam("id") Long articleId, @RequestParam("category") Long categoryId) {
-        if(bindingResult.hasErrors()) return "article_update";
+    public String update(@ModelAttribute("article") @Valid Article article, BindingResult bindingResult, @RequestParam("id") Long articleId, @RequestParam("category") Long categoryId, Model model) {
+        if(bindingResult.hasErrors()) {
+            List<Category> categories = categoryRepository.findAll();
+            model.addAttribute("listCategory", categories);
+            return "article_update";
+        }
         article.setId(articleId);
 
         Optional<Category> category = categoryRepository.findById(categoryId);
