@@ -22,6 +22,6 @@ public class Category implements Serializable {
     @Size(min=2,max=50)
     private String name;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     private Collection<Article> articles;
 }

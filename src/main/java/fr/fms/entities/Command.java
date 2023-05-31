@@ -6,25 +6,24 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Date;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
-public class Article implements Serializable {
+public class Command implements Serializable {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    private Long idCommand;
 
-    @NotNull
-    @Size(min=5,max=50)
-    private String description;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "command")
+    private Collection<OrderItem> orderItems;
 
-    @DecimalMin("50")
-    private double price;
+    private double amount;
+    private Date date;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Category category;
+    private Customer customer;
+
 }
