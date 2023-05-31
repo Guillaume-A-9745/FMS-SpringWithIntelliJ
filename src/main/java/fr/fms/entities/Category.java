@@ -6,25 +6,22 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Collection;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor @ToString
-public class Article implements Serializable {
+public class Category implements Serializable {
 
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Size(min=5,max=50)
-    private String description;
+    @Size(min=2,max=50)
+    private String name;
 
-    @DecimalMin("50")
-    private double price;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Category category;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+    private Collection<Article> articles;
 }
