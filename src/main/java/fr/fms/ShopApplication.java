@@ -30,6 +30,7 @@ public class ShopApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		//generateData();
+
 	}
 
 	//Alimenter la base de donnée

@@ -1,5 +1,6 @@
 package fr.fms.web;
 
+import fr.fms.business.IBusinessImpl;
 import fr.fms.dao.ArticleRepository;
 import fr.fms.dao.CategoryRepository;
 import fr.fms.entities.Article;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +28,8 @@ public class ArticleController {
     ArticleRepository articleRepository;
     @Autowired
     CategoryRepository categoryRepository;
+    @Autowired
+    IBusinessImpl iBusiness;
 
     @GetMapping("/index")
     public String index(Model model, @RequestParam(name="page", defaultValue = "0") int page,
@@ -100,5 +105,18 @@ public class ArticleController {
 
         articleRepository.save(article);
         return "redirect:/index";
+    }
+
+    @GetMapping("/addToCart")
+    public String addToCart(Long id, int page, String keyword) {
+        Optional<Article> optionalArticle = articleRepository.findById(id);
+        if (optionalArticle.isPresent()) {
+            Article article = optionalArticle.get();
+            iBusiness.addToCart(article);
+            return "redirect:/index?page=" + page + "&keyword=" + keyword;
+        } else {
+            System.out.println("L'article avec l'ID " + id + " n'existe pas.");
+            return null;
+        }
     }
 }
